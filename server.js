@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const db = require('./db');
 const { PORT } = require('./env');
 const app = require('./app');
- 
+
 const server = http.Server(app);
 
 server.listen(Number(PORT), () => {

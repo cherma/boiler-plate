@@ -2,9 +2,9 @@ const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
-const winston = require('./utils/winston');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const winston = require('./utils/winston');
 
 const app = express();
 

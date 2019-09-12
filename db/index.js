@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+const chalk = require('chalk');
 const { db } = require('../config');
 const logger = require('../utils/winston');
-const chalk = require('chalk');
 
 function connect() {
   mongoose.connect(db.connectionString, { auto_reconnect: true, useNewUrlParser: true });
@@ -10,25 +10,25 @@ function connect() {
 
 connect();
 
-mongoose.connection.on('error', function(){
- logger.error('Could not connect to mongoose');
+mongoose.connection.on('error', () => {
+  logger.error('Could not connect to mongoose');
 });
 
-mongoose.connection.on('disconnected', function(){
+mongoose.connection.on('disconnected', () => {
   logger.warn('Lost mongo connection');
 });
 
-mongoose.connection.on('reconnected', function(){
+mongoose.connection.on('reconnected', () => {
   logger.warn('Reconnected mongo connection');
 });
 
-function quit(){
-  mongoose.connection.close(function(){
-    console.log(chalk.hex('#009688')(`Closing DB connection`));
-  })
+function quit() {
+  mongoose.connection.close(() => {
+    console.log(chalk.hex('#009688')('Closing DB connection'));
+  });
 }
 
 module.exports = {
   mongoose,
-  quit
+  quit,
 };
