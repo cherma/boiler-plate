@@ -1,20 +1,18 @@
 const http = require('http');
 const chalk = require('chalk');
-const mongoose = require('./db/mongoose');
-const { PORT, HOST } = require('./env');
+const db = require('./db');
+const { PORT } = require('./env');
 const app = require('./app');
-
+ 
 const server = http.Server(app);
-console.log(chalk.hex('#009688')(`Server Started in port ${PORT}`));
 
-server.listen(Number(PORT), HOST, () => {
+server.listen(Number(PORT), () => {
+  console.log(chalk.hex('#009688')(`Server Started in port ${PORT}`));
 });
 
 function shutdown() {
   console.log(chalk.hex('#f00')('Warn:*******shutting down server*********'));
-  mongoose.connection.close(() => {
-    console.log(chalk.hex('#f00')('Forcing Mongo to close'));
-  });
+  db.quit();
 }
 
 process.once('SIGINT', shutdown);
